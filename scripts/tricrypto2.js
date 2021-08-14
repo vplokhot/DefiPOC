@@ -25,6 +25,9 @@ async function main() {
 
   await swapTriCrypto2.deployed();
 
+  await swapTriCrypto2.setup(swapAddress, depositAddress);
+
+
   const balance = await hre.ethers.provider.getBalance(swapTriCrypto2.address)
   const ethBalance = hre.ethers.utils.formatEther(balance.toString())
   console.log(ethBalance, " swap balance");
@@ -32,10 +35,13 @@ async function main() {
   await swapTriCrypto2.deposit({from: accounts.address, value: wei})
   await swapTriCrypto2.deposit({from: accounts.address, value: wei})
 
+  let amounts = [0, 0, 20]
+
   const balance2 = await hre.ethers.provider.getBalance(swapTriCrypto2.address)
-  const ethBalance2 = hre.ethers.utils.formatEther(balance2.toString())
+  const ethBalance2 = hre.ethers.utils.formatEther(balance2)
   console.log(ethBalance2, " swap balance");
-  
+
+  await swapTriCrypto2.add_liquidity(amounts, 0, accounts.address)
 
 }
 
