@@ -41,12 +41,25 @@ async function main() {
   const amounts = [0, 0, wei]
   const initialContractBalance = await hre.ethers.provider.getBalance("0xcd8a1c3ba11cf5ecfa6267617243239504a98d90");
   console.log(initialContractBalance.toString(), " start balance ")
-  const result = await tripool.add_liquidity(amounts, 0, "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90", {value: wei});
+
+  
+  
+//   const result = await tripool.add_liquidity(amounts, 0, "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90", {value: wei});
+
+
+
+
   const postBalance = await tripool.getTokenBalance("0xcd8a1c3ba11cf5ecfa6267617243239504a98d90")
   console.log(hre.ethers.utils.formatEther(postBalance.toString()), " postBalance ") 
 
-  await tripool.remove_liquidity_one_coin(postBalance, 2, 0, "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90")
 
+
+
+//   await tripool.remove_liquidity_one_coin(postBalance, 2, 0, "0xcd8a1c3ba11cf5ecfa6267617243239504a98d90")
+
+  
+  
+  
   const postWithdrawalBalance = await tripool.getTokenBalance("0xcd8a1c3ba11cf5ecfa6267617243239504a98d90")
   console.log(hre.ethers.utils.formatEther(postWithdrawalBalance.toString()), " postWithdrawalBalance ")
   const endContractBalance = await hre.ethers.provider.getBalance("0xcd8a1c3ba11cf5ecfa6267617243239504a98d90");

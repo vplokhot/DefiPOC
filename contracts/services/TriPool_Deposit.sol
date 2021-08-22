@@ -18,9 +18,6 @@ import "../interfaces/tricrypto2/ITriERC20.sol";
 contract TriPool_Deposit is Initializable, Context, Ownable{
 
     using SafeMath for uint256;
-    uint256 public price;
-    address public coin;
-    mapping(address => uint) contributions;
     ICurveFi_DepositTriCrypto2 public IDeposit;
     ITriERC20 public ITriToken;
 
@@ -31,11 +28,6 @@ contract TriPool_Deposit is Initializable, Context, Ownable{
     }
 
     function add_liquidity(uint256[3] calldata _amounts, uint256 _min_mint_amount, address _receiver) external payable returns(uint256){
-        console.log(msg.value, " msg value");
-        for(uint i=0; i<_amounts.length; i++){
-            console.log(_amounts[i]);
-        }
-        console.log(_receiver);
         return IDeposit.add_liquidity{value: msg.value}(_amounts, _min_mint_amount, address(this));
     }
 
@@ -44,15 +36,9 @@ contract TriPool_Deposit is Initializable, Context, Ownable{
     }
 
     function remove_liquidity_one_coin(uint256 _token_amount, uint256 i, uint256 _min_amount, address _receiver) external returns(uint256){
-        ITriToken.approve(0x3993d34e7e99Abf6B6f367309975d1360222D446, 0);
+        // ITriToken.approve(0x3993d34e7e99Abf6B6f367309975d1360222D446, 0);
         ITriToken.approve(0x3993d34e7e99Abf6B6f367309975d1360222D446, _token_amount);
         
-        //original balance
-        // uint256 cBalance = ITriToken.balanceOf(address(this));
-        // console.log(cBalance, " cBalance ");
-        // uint256 oBalance = ITriToken.balanceOf(0x3993d34e7e99Abf6B6f367309975d1360222D446);
-        // console.log(oBalance, " deposit contract balance ");
-        // console.log(_token_amount, " _token_amount ");
         return IDeposit.remove_liquidity_one_coin(_token_amount, i, _min_amount, _receiver);
     }
 
